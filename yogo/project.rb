@@ -7,7 +7,7 @@ module Yogo
   class Project
     include DataMapper::Resource
     
-    property :id,           UUID
+    property :id,           Serial
     property :name,         String,   :required => true,
                                       :unique   => true
     property :description,  Text,     :required => false

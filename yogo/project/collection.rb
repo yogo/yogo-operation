@@ -6,7 +6,7 @@ module Yogo
     class Collection
       include DataMapper::Resource
       
-      property :id,         UUID
+      property :id,         Serial
       property :name,       String,     :required => true
       property :description,  Text
       
