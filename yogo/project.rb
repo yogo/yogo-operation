@@ -16,5 +16,8 @@ module Yogo
     
     has n, :collections, Yogo::Project::Collection
     
+    def self.default_data_repository_name
+      :project_data
+    end
   end
 end # Yogo
