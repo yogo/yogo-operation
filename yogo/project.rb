@@ -9,8 +9,7 @@ module Yogo
     include DataMapper::Resource
     
     property :id,           Serial
-    property :name,         String,   :required => true,
-                                      :unique   => true
+    property :name,         String,   :required => true
     property :description,  Text,     :required => false
     
     validates_uniqueness_of :name
