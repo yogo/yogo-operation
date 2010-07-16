@@ -1,6 +1,7 @@
 require 'dm-core'
 require 'dm-validations'
 require 'dm-types'
+require 'yogo/project/property_ext'
 require 'yogo/project/collection'
 
 module Yogo
