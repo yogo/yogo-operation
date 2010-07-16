@@ -5,13 +5,13 @@ module Yogo
         module Definition
           def dump_definition
             definition = {}
-            definition[:properties] = properties.map do |property|
+            definition[:properties] = {}
+            properties.each do |property|
               prop_type = ActiveSupport::Inflector.demodulize(property.class.name)
               prop_name = property.name
               prop_opts = property.options
-              {
+              definition[:properties][prop_name] = {
                 :type => prop_type,
-                :name => prop_name,
                 :options => prop_opts
               }
             end
