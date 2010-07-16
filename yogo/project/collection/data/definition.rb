@@ -20,6 +20,10 @@ module Yogo
           end
           
           def load_definition(definition)
+            properties.clear
+            definition[:properties].each do |name, config|
+              property name.to_sym, ActiveSupport::Inflector.constantize(config[:type]), config[:options]
+            end
           end
         end # Definition
       end # Data
