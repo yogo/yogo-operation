@@ -14,6 +14,10 @@ module Yogo
             def default_repository_name
               self.project_collection.data_repository.name
             end
+            
+            def default_storage_name
+              self.project_collection.data_storage_name
+            end
         
             def project_collection
               @_project_collection
@@ -22,6 +26,7 @@ module Yogo
             def project_collection=(col)
               @_project_collection=col
             end
+            
           end # ClassMethods
         end # Model
       end # Data
