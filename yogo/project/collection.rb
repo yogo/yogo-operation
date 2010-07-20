@@ -3,6 +3,7 @@ require 'uuidtools'
 
 require 'yogo/project'
 require 'yogo/project/collection/data/model'
+require 'yogo/project/property_ext'
 
 module Yogo
   class Project
@@ -25,36 +26,44 @@ module Yogo
       
       def data_definition
         {
-          :properties => {}.merge!(data_properties)
+          'properties' => data_properties.dup
         }
       end
       
       def data_definition=(definition)
-        data_properties = definition[:properties] || {}
+        props = definition['properties'] || {}
+        props['id'] ||= {'type' => "Serial"}
+        self.data_properties = props.dup
+        update_model
+        data_definition
       end
       
-      after(:data_definition=) do
-        update_model
-      end
+      # after(:data_definition=) do
+      #         update_model
+      #       end
       
       protected
       
       property :data_storage_name,     String, :default => UUIDTools::UUID.timestamp_create.to_s
-      property :data_properties,       Json, :default => {}.to_json
+      property :data_properties,       Json, :default => {'id' => { 'type' => "Serial" }}.to_json
       
       private
+      
+      
       
       def generate_model
         model = DataMapper::Model.new
         model.send(:include, Data::Model)
         model.project_collection = self
         model.load_definition(data_definition)
+        model.auto_upgrade!
         return model
       end
       
       def update_model
         model = data
         model.load_definition(data_definition)
+        model.auto_upgrade!
       end
     end # Collection
   end # Project
