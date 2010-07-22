@@ -49,7 +49,14 @@ module Yogo
       
       private
       
-      
+      def as_json(options={})
+        options[:exclude] = Array(options[:exclude])
+        options[:exclude] << :data_properties << :data_storage_name
+        
+        options[:methods] = Array(options[:methods])
+        options[:methods] << :data_definition
+        super(options)
+      end
       
       def generate_model
         model = DataMapper::Model.new
