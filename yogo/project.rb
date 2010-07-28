@@ -1,8 +1,8 @@
 require 'dm-core'
 require 'dm-validations'
 require 'dm-types'
-require 'yogo/project/property_ext'
-require 'yogo/project/collection'
+require 'yogo/property_ext'
+require 'yogo/collection'
 
 module Yogo
   class Project
@@ -14,20 +14,11 @@ module Yogo
     
     validates_uniqueness_of :name
     
-    has n, :collections, Yogo::Project::Collection
+    remix n, :collections
     
-    def data_repository
-      DataMapper.repository(data_repository_name)
-    end
-    
-    private
-    
-    def self.default_data_repository_name
-      :project_data
-    end
-    
-    def data_repository_name
-      self.class.default_data_repository_name
+    enhance :collections do
+      remix n, :schemas
+      remix n, :forms
     end
     
     
