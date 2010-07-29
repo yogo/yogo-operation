@@ -1,5 +1,5 @@
 module Yogo
-  module Collection
+  class Collection
     module Data
       module Definition
         def dump_definition
