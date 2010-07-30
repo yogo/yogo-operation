@@ -19,8 +19,11 @@ module Yogo
 
     has n, :schema, :model => 'Yogo::Collection::Property', :child_key => [:data_collection_id]
     
+    property   :project_id,     UUID
+    belongs_to :project, :model => 'Yogo::Project'
+    
     def self.default_collection_repository_name
-      'collection_data'
+      :collection_data
     end
     
     def collection_repository

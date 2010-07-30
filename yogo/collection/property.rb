@@ -11,7 +11,7 @@ module Yogo
       property  :options, Yaml,         :default => {}.to_yaml
       property  :type,    Discriminator
       
-      property  :data_collection_id, UUID
+      property   :data_collection_id, UUID
       belongs_to :data_collection, :model => 'Yogo::Collection'
       
     
@@ -45,7 +45,7 @@ module Yogo
       property :target,       String
       property :cardinality,  Integer,    :default => 1
       
-      def relationship_method
+      def model_method
         :has
       end
       
@@ -65,7 +65,7 @@ module Yogo
       class OneToOne < self; end
       
       class ManyToOne < self
-        def relationship_method
+        def model_method
           :belongs_to
         end
         
