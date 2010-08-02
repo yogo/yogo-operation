@@ -1,14 +1,17 @@
 require 'dm-timestamps'
-require 'yogo/collection/data/definition'
 
 module Yogo
-  class Collection
-    module Data
-      module Model
-        def self.included(base)
-          base.extend(ClassMethods)
-          base.send(:include, InstanceMethods)
+  module Collection
+    class Data
+      module Model 
+        def to_s
+          "DataItemModel[#{default_storage_name}]"
         end
+        
+        def resolve_property(options)
+          collection.send(:resolve_property, options)
+        end
+
         
         module InstanceMethods
           def self.included(base)
@@ -56,44 +59,7 @@ module Yogo
             self.class.resolve_property(options)
           end
           
-        end
-        
-        module CoreProperties
-          def self.included(base)
-            base.class_eval do
-              property :id,           UUID, :key => true, :default => lambda { UUIDTools::UUID.timestamp_create }
-              property :created_at,   DateTime
-              property :updated_at,   DateTime
-            end
-          end
-        end
-              
-        module ClassMethods
-          def to_s
-            "CollectionItemModel[#{default_storage_name}]"
-          end
-          
-          def default_repository_name
-            self.collection.collection_repository.name
-          end
-          
-          def default_storage_name
-            self.collection.collection_storage_name
-          end
-      
-          def collection
-            @_collection
-          end
-      
-          def collection=(col)
-            @_collection=col
-          end
-          
-          def resolve_property(options)
-            collection.send(:resolve_property, options)
-          end
-          
-        end # ClassMethods
+        end # InstanceMethods
       end # Model
     end # Data
   end # Collection

@@ -1,18 +1,20 @@
 require 'dm-types/uuid'
 require 'dm-types/yaml'
 
+require 'yogo/configuration'
+
 module Yogo
-  class Collection
+  module Collection
     class Property
       include DataMapper::Resource
 
-      property  :id,      UUID,         :key => true, :default => lambda { UUIDTools::UUID.timestamp_create }
+      property  :id,      UUID,         :key => true, :default => lambda { Configuration.random_uuid }
       property  :name,    String,       :required => true
       property  :options, Yaml,         :default => {}.to_yaml
       property  :type,    Discriminator
       
       property   :data_collection_id, UUID
-      belongs_to :data_collection, :model => 'Yogo::Collection'
+      belongs_to :data_collection, :model => 'Yogo::Collection::Data'
       
     
       def field_name

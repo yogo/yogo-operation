@@ -10,6 +10,6 @@ module Yogo
     property :name,             String,     :required => true
     property :description,      Text
     
-    has n,   :data_collections, :model => 'Yogo::Collection', :child_key => [:project_id]
+    has n,   :data_collections, :model => 'Yogo::Collection::Data', :child_key => [:project_id]
   end # Project
 end # Yogo
