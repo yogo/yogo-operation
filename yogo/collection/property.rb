@@ -16,7 +16,8 @@ module Yogo
       property   :data_collection_id, UUID
       belongs_to :data_collection, :model => 'Yogo::Collection::Data'
       
-    
+      validates_uniqueness_of :name, :scope => :data_collection_id
+      
       def field_name
         self.name
       end

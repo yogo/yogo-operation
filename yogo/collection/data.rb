@@ -23,6 +23,8 @@ module Yogo
       property   :project_id,     UUID
       belongs_to :project, :model => 'Yogo::Project'
       
+      validates_uniqueness_of :name, :scope => :project_id
+      
       has n, :schema, :model => 'Yogo::Collection::Property', :child_key => [:data_collection_id]
       
       include Collection::Base
@@ -33,7 +35,6 @@ module Yogo
       def resolve_property(options)
         schema.first(options)
       end
-
 
     end # Base
   end # Collection
