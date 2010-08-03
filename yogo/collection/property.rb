@@ -48,8 +48,12 @@ module Yogo
     
     
     class Relationship < Property
-      property :target,       String
-      property :cardinality,  Integer,    :default => 1
+      property    :target_collection_id, UUID
+      belongs_to  :target_collection, :model => 'Yogo::Collection::Data'
+      
+      def target_model
+        target_collection.data_model
+      end
       
       def model_method
         :has
@@ -59,16 +63,28 @@ module Yogo
         raise ":target not set" unless self.target && !self.target.empty?
       end
       
-      def add_to_model(model)
+      def add_to_model(model, n, options={})
         check_target
-        model.send(model_method, cardinality, ActiveSupport::Inflector.tableize(self.target).intern, self.options)
+        model.send(model_method, n, ActiveSupport::Inflector.tableize(self.target).intern, options.merge(self.options))
       end
       
-      class ManyToMany < self; end
+      class ManyToMany < self
+        def add_to_model(model)
+          super(model, Infinity, :through => DataMapper::Resource)
+        end
+      end
       
-      class OneToMany < self; end
+      class OneToMany < self
+        def add_to_model(model)
+          super(model)
+        end
+      end
       
-      class OneToOne < self; end
+      class OneToOne < self
+        def add_to_model(model)
+          super(model, 1)
+        end
+      end
       
       class ManyToOne < self
         def model_method
@@ -77,7 +93,7 @@ module Yogo
         
         def add_to_model(model)
           check_target
-          model.send(model_method, ActiveSupport::Inflector.underscore(self.target).intern, self.options)
+          model.send(model_method, ActiveSupport::Inflector.underscore(self.target).intern, options.merge(self.options))
         end
       end
       
