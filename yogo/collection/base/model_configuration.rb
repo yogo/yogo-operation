@@ -13,6 +13,7 @@ module Yogo
         
         def after_model_generate(model)
           model.extend(Base::Model)
+          model.send(:include, Base::Model::InstanceMethods)
         end
         
         def model_update(model)
