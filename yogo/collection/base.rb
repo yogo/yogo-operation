@@ -16,6 +16,10 @@ module Yogo
       def collection_storage_name
         self.id.to_s
       end
+      
+      def as_json(options={})
+        self.attributes
+      end
 
       def items(*args)
         data_model.all(*args)

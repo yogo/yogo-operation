@@ -19,11 +19,22 @@ module Yogo
       validates_uniqueness_of :name, :scope => :data_collection_id
       
       def field_name
-        self.name
+        self.to_s
       end
     
       def to_s
         'field_' + self.id.to_s.gsub('-','_')
+      end
+      
+      def as_json(opts=nil)
+        {
+          :id => self.id.to_s,
+          :type => self.type.to_s,
+          :field_name => self.to_s,
+          :name => self.name,
+          :options => self.options,
+          :data_collection => self.data_collection_id.to_s
+        }
       end
       
       def model_method
@@ -50,6 +61,12 @@ module Yogo
     class Relationship < Property
       property    :target_collection_id, UUID
       belongs_to  :target_collection, :model => 'Yogo::Collection::Data'
+      
+      def as_json(options=nil)
+        hash = super
+        hash[:target_collection_id] = self.target_collection_id.to_s
+        hash
+      end
       
       def target_model
         target_collection.data_model

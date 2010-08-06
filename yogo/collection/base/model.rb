@@ -21,6 +21,12 @@ module Yogo
         def collection=(col)
           @_collection=col
         end
+        
+        module InstanceMethods
+          def as_json(options=nil)
+            self.attributes
+          end
+        end
 
       end # Model
     end # Base

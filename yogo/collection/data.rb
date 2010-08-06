@@ -1,7 +1,6 @@
 require 'dm-core'
 require 'dm-validations'
 require 'dm-types/uuid'
-require 'dm-serializer'
 require 'dm-timestamps'
 
 require 'yogo/configuration'
@@ -17,7 +16,7 @@ module Yogo
       
       property :id,               UUID,       :key => true, :default => lambda { Yogo::Configuration.random_uuid }
       property :name,             String,     :required => true
-      property :description,      Text
+      property :description,      String
       property :type,             Discriminator
       
       property   :project_id,     UUID
@@ -29,6 +28,19 @@ module Yogo
       
       include Collection::Base
       include Data::ModelConfiguration
+      
+      chainable do
+        def as_json
+          {
+            :id => self.id.to_s,
+            :name => self.name,
+            :description => self.description,
+            :type => self.type.to_s,
+            :project => self.project_id.to_s,
+            :schema => self.schema.map{|p| p.id.to_s }
+          }
+        end
+      end
       
       protected
 
