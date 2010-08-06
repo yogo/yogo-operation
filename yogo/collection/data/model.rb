@@ -21,6 +21,12 @@ module Yogo
             end
           end
           
+          def as_json(options=nil)
+            hash = super
+            hash[:id] = self.id.to_s
+            hash
+          end
+          
           def named_attribute_get(name)
             name = name.to_s
             property = resolve_property(:name => name)
