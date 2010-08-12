@@ -3,7 +3,7 @@ module Yogo
     class Asset
       module Model
         def to_s
-          "AssetItemModel[#{default_storage_name}]"
+          "AssetItemModel[]"
         end
       end # Model
     end # Asset

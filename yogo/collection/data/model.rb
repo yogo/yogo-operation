@@ -5,7 +5,7 @@ module Yogo
     class Data
       module Model 
         def to_s
-          "DataItemModel[#{default_storage_name}]"
+          "DataItemModel[]"
         end
         
         def resolve_property(options)
