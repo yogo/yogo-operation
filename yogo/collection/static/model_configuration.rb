@@ -1,6 +1,6 @@
 module Yogo
   module Collection
-    module Static
+    class Static
       module ModelConfiguration
         def model_generate
           model_name = self.static_model
@@ -11,11 +11,11 @@ module Yogo
         end
         
         def after_model_generate(model)
-          model.storage_names[self.collection_repository_name] = self.collection_storage_name
+          model
         end
         
         def model_update(model)
-          model
+          model.extend(Base::ModelCollectionContext) unless model.respond_to?(:current_collection)
         end
 
         def before_model_update(model)
