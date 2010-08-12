@@ -1,5 +1,6 @@
 
 require 'yogo/collection/base/collection_repository'
+require 'yogo/collection/base/model_collection_context'
 require 'yogo/collection/base/model_configuration'
 
 module Yogo
@@ -22,7 +23,9 @@ module Yogo
       end
 
       def items(*args)
-        data_model.all(*args)
+        scope do
+          data_model.all(*args)
+        end
       end
       
       def data_model
@@ -30,12 +33,25 @@ module Yogo
       end
       
       def update_model(model=data_model)
-        before_model_update(model)
-        model_update(model)
-        if block_given?
-          yield
+        scope do
+          before_model_update(model)
+          model_update(model)
+          if block_given?
+            yield
+          end
+          after_model_update(model)
         end
-        after_model_update(model)
+      end
+      
+      def scope
+        context = Yogo::Collection.context
+        context << self
+        
+        begin
+          yield self
+        ensure
+          context.pop
+        end
       end
       
       private
@@ -45,7 +61,6 @@ module Yogo
         model = model_generate
         after_model_generate(model)
         
-        model.collection = self
         update_model(model)
         return model
       end
