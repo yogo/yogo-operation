@@ -21,6 +21,12 @@ module Yogo
           :data_collections => self.data_collections.map{|c| c.id.to_s }
         }
       end
+      
+      def update_attributes(hash)
+        attrs = {}
+        attrs[:name] = hash[:name] || hash['name'] || self.name
+        attrs[:description] = hash[:description] || hash['description'] || self.description
+      end
     end
   end # Project
 end # Yogo

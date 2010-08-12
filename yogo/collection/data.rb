@@ -40,6 +40,14 @@ module Yogo
             :schema => self.schema.map{|p| p.id.to_s }
           }
         end
+        
+        def update_attributes(hash)
+          attrs = {}
+          attrs[:name] = hash[:name] || hash['name'] || self.name
+          attrs[:description] = hash[:description] || hash['description'] || self.description
+          attrs[:type] = hash[:type] || hash['type'] || self.type || self.class.name
+          self.attributes = attrs
+        end
       end
       
       protected

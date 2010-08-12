@@ -37,6 +37,14 @@ module Yogo
         }
       end
       
+      def update_attributes(hash)
+        attrs = {}
+        attrs[:name] = hash[:name] || hash['name'] || self.name
+        attrs[:type] = hash[:type] || hash['type'] || self.type || self.class.name
+        attrs[:options] = hash[:options] || hash['options'] || self.options
+        self.attributes = attrs
+      end
+      
       def model_method
         :property
       end
