@@ -10,14 +10,12 @@
 # Class for a Yogo Project. A project contains a name, a description, and access to all of the models
 # that are part of the project.
 module Yogo
-  module Example
-    module Voeis
+  module Voeis
+    module Managed
       class DataStream
         include ::DataMapper::Resource
-        extend Yogo::DataMapper::Model::StorageContext
-  
 
-        property :id,               UUID,       :key => true, :default => lambda { UUIDTools::UUID.timestamp_create }
+        property :id,   UUID,       :key => true, :default => lambda { UUIDTools::UUID.timestamp_create }
 
         property :name, String, :required => true, :unique => true
         property :description, Text, :required => false
@@ -30,15 +28,12 @@ module Yogo
 
         #before :destroy, :delete_data_stream_columns!
         
-        property :project_id,       UUID
-        belongs_to :project, :model => "Yogo::Example::Voeis::Site"
-  
-        has n, :sites, :model => 'Yogo::Example::Voeis::Site', :through => Resource
+        has n, :sites, :through => Resource
         # has n, :data_stream_columns, :model => "DataStreamColumn", :through => Resource
 
 
 
       end # DataStream
-    end # Voeis
-  end # Example
+    end # Managed
+  end # Voeis
 end # Yogo

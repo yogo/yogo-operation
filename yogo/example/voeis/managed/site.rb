@@ -23,12 +23,11 @@
 # reference system of the local coordinates is unknown, a default value of 0 is used.
 #
 module Yogo
-  module Example
-    module Voeis
+  module Voeis
+    module Managed
       class Site
         include ::DataMapper::Resource
-        extend Yogo::DataMapper::Model::StorageContext
-
+        
         property :id,               UUID,       :key => true, :default => lambda { UUIDTools::UUID.timestamp_create }
         property :site_code, String, :required => true
         property :site_name, String, :required => true
@@ -44,11 +43,9 @@ module Yogo
         property :state, String, :required => false
         property :country, String, :required => false
         property :comments, String, :required => false
-        
-        property :project_id,       UUID
-        belongs_to :project, :model => "Yogo::Example::Voeis::Site"
-        has n,     :data_streams, :model => "Yogo::Example::Voeis::DataStream", :through => Resource
+      
+        has n,     :data_streams, :through => Resource
       end # Site
-    end # Voeis
-  end # Example
+    end # Managed
+  end # Voeis
 end # Yogo
