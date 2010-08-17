@@ -1,5 +1,3 @@
-require 'yogo/datamapper/storage'
-
 module Yogo
   module DataMapper
     module Model
