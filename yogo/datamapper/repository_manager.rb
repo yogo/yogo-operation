@@ -1,32 +1,30 @@
+require 'yogo/datamapper/repository_manager/model'
+require 'yogo/datamapper/repository_manager/resource'
+
 module Yogo
   module DataMapper
     module RepositoryManager
-      def managed_repository_name
-        raise NotImplementedError
-      end
-      
-      def adapter_config
-        raise NotImplementedError
-      end
-      
-      def adapter
-        begin
-          ::DataMapper.repository(managed_repository_name).adapter
-        rescue ::DataMapper::RepositoryNotSetupError
-          ::DataMapper.setup(managed_repository_name, adapter_config)
-          retry
+      def self.included(base)
+        base.class_eval do
+          extend(RepositoryManager::Model)
+          include(RepositoryManager::Resource)
         end
-      end
-      
-      def managed_repository(&block)
-        adapter # ensure the adapter get's setup or exists
-        if block_given?
-          ::DataMapper.repository(managed_repository_name, &block)
-        else
-          ::DataMapper.repository(managed_repository_name)
-        end
-      end
-      
-    end # StorageManager
+      end      
+    end # RepositoryManager
   end # DataMapper
 end # Yogo
+
+module DataMapper
+  module Is
+    module RepositoryManager
+      def is_repository_manager
+        include(Yogo::DataMapper::RepositoryManager)
+      end
+    end # RepositoryManager
+  end # Is
+  
+  if const_defined?("Model")
+    Model.append_extensions(Is::RepositoryManager)
+  end
+end # DataMapper
+
