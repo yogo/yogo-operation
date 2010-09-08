@@ -1,4 +1,3 @@
-require 'yogo/operation'
 require 'yogo/datamapper/model/operations/add'
 require 'dm-types/uuid'
 
