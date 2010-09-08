@@ -2,13 +2,14 @@ require 'yogo/configuration'
 require 'yogo/datamapper/model/configuration'
 require 'yogo/datamapper/model/common/properties'
 require 'dm-types/yaml'
+require 'yogo/support/object/apply'
 
 DataMapper.setup(:default, :adapter => 'sqlite3', :database => 'dynamic_project.db')
 
 class ProjectFull
   include DataMapper::Resource
   
-  Yogo::DataMapper::Model::Common::Properties::UUIDKey[self]
+  apply Yogo::DataMapper::Model::Common::Properties::UUIDKey
   
   property :name,             String,     :required => true
   
@@ -20,7 +21,7 @@ class ManagedModel
   include DataMapper::Resource
   include Yogo::DataMapper::Model::Configuration
   
-  Yogo::DataMapper::Model::Common::Properties::UUIDKey[self]
+  apply Yogo::DataMapper::Model::Common::Properties::UUIDKey
   property :name,             String,     :required => true
   
   has n, :model_operations
@@ -37,7 +38,7 @@ end
 class ModelOperation
   include DataMapper::Resource
   
-  Yogo::DataMapper::Model::Common::Properties::UUIDKey[self]
+  apply Yogo::DataMapper::Model::Common::Properties::UUIDKey
   
   property :operation,        String,     :required => true
   property :parameters,       Yaml,       :default => lambda{|*args| [] }
