@@ -1,11 +1,11 @@
-require 'yogo/operation'
+require 'yogo/op'
 
 module Yogo
   module DataMapper
     module Model
       module Operations
         module Add
-          Property = Operation.on(::DataMapper::Model) do |model, name, type, options|
+          Property = Op.on(::DataMapper::Model) do |model, name, type, options|
             type ||= String
             options ||= {}
             model.property(name, type, options)
@@ -13,7 +13,7 @@ module Yogo
           end
           
           
-          Relationship = Operation.on(::DataMapper::Model) do |model, method, *args|
+          Relationship = Op.on(::DataMapper::Model) do |model, method, *args|
             model.send(method, *args)
             model
           end
