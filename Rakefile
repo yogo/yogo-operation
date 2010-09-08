@@ -1,4 +1,12 @@
 require 'rubygems'
+
+begin
+  require 'bundler'
+  Bundler.setup
+rescue LoadError
+  puts "Bundler is not intalled. Install with: gem install bundler"
+end
+
 require 'rake'
 
 begin
