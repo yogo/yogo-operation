@@ -14,4 +14,9 @@ module Yogo
   class FlowOp < Op
     extend Yogo::Operation::Concurrent
   end
+  
+  class Transform < Proc
+    extend Yogo::Operation::Base
+    extend Yogo::Operation::Restricted
+  end
 end # Yogo
