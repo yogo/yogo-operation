@@ -44,7 +44,8 @@ Gem::Specification.new do |s|
      "lib/yogo/operation/restricted/partial.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/yogo-operation_spec.rb"
+     "spec/yogo-operation_spec.rb",
+     "yogo-operation.gemspec"
   ]
   s.homepage = %q{http://github.com/yogo/yogo-operation}
   s.rdoc_options = ["--charset=UTF-8"]
