@@ -9,8 +9,8 @@ module Yogo
         include Yogo::Support::Proc::Compose
         
         # Restricted operations are always expected to accept and return
-        # the SAME type of argument. Therefore don't *splat appart the result
-        # of the composed operation 'g'.
+        # the SAME type of argument. Therefore don't *splat apart the result
+        # of the composed operation 'g' as is done in Yogo::Support::Proc::Compose
         def compose(g)
           lambda{|*args| self[g[*args]]}
         end
