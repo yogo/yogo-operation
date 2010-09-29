@@ -12,7 +12,7 @@ module Yogo
         # the SAME type of argument. Therefore don't *splat apart the result
         # of the composed operation 'g' as is done in Yogo::Support::Proc::Compose
         def compose(g)
-          lambda{|*args| self[g[*args]]}
+          self.class.on(self.expected_type){ |*args| self[g[*args]] }
         end
       end # Partial
     end # Restricted
