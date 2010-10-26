@@ -8,7 +8,7 @@ module Yogo
           raise "Inclusions not allowed. Use: extend(#{self.name})"
         end
       
-        def extended(base)
+        def self.extended(base)
           base.class_eval {
             include ExpectedType
           }
