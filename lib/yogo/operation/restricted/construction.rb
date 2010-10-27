@@ -13,7 +13,7 @@ module Yogo
             include ExpectedType
           }
           base.instance_eval {
-            protected :new
+            # protected :new
           }
         end
       
