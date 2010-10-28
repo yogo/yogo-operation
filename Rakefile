@@ -7,15 +7,14 @@ rescue LoadError
 end
 
 begin
-  require 'spec/rake/spectask'
-  Spec::Rake::SpecTask.new(:spec) do |spec|
-    spec.libs << 'lib' << 'spec'
-    spec.spec_files = FileList['spec/**/*_spec.rb']
-  end
-  Spec::Rake::SpecTask.new(:coverage) do |spec|
-    spec.libs << 'lib' << 'spec'
-    spec.pattern = 'spec/**/*_spec.rb'
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+
+  desc 'Run all examples using rcov'
+  RSpec::Core::RakeTask.new(:rcov) do |spec|
     spec.rcov = true
+    spec.rcov_opts =  %[-Ilib -Ispec --exclude "mocks,expectations,gems/*,spec/resources,spec/lib,spec/spec_helper.rb,db/*,/Library/Ruby/*,config/*"]
+    spec.rcov_opts << %[--no-html --aggregate coverage.data]
   end
 rescue LoadError
   puts "RSpec not installed. Install with: bundle install"
