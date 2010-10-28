@@ -1,13 +1,30 @@
 source :rubygems
+gemspec
 
-gem 'dataflow'
-gem 'yogo-support', "~> 0.1.0"
+#
+# Development and Test Dependencies
+#
+group :development, :test do
+  platforms(:mri_19) do
+    gem "ruby-debug19",       :require => "ruby-debug"
+    gem "rack-debug19",       :require => "rack-debug"
+  end
+
+  platforms(:mri_18) do
+    gem "ruby-debug"
+    gem "rack-debug"
+  end
+end
 
 group :development do
   gem "rake"
   gem "jeweler"
-  gem "rspec"
-  gem "cucumber"
   gem "yard"
-  gem "ruby-debug"
+  gem "yardstick"
+end
+
+group :test do
+  gem "rspec"
+  gem "rack-test"
+  gem "cucumber"
 end

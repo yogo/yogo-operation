@@ -22,3 +22,6 @@ pkg
 
 ## PROJECT::SPECIFIC
 spec/tmp
+
+## Hm
+doc/*
