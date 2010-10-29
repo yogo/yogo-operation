@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yogo-operation (0.1.2)
+    yogo-operation (0.2.0)
       dataflow
       yogo-support (~> 0.1.0)
 
