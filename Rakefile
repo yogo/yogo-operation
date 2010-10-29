@@ -1,9 +1,22 @@
 begin
   require 'bundler'
   Bundler.setup
-  Bundler::GemHelper.install_tasks
 rescue LoadError
   puts "Bundler is not intalled. Install with: gem install bundler"
+end
+
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  gem.name =          %q{yogo-operation}
+  gem.authors =       ["Ryan Heimbuch"]
+  gem.date =          %q{2010-09-16}
+  gem.description =   %q{yogo-operation contains extensions to Proc to support various higher-order operations}
+  gem.email =         %q{rheimbuch@gmail.com}
+  gem.homepage =      %q{http://github.com/yogo/yogo-operation}
+  gem.rdoc_options =  ["--charset=UTF-8"]
+  gem.summary =       %q{specialization of Proc}
+  gem.add_dependency( %q<dataflow>,     ">= 0"    )
+  gem.add_dependency( %q<yogo-support>, "~> 0.1.0")
 end
 
 begin
